@@ -1,8 +1,11 @@
-# React + Vite
+## learning
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- npm i chart.js react-chartjs-2
+- new way of accessing obj prop value let a={ name:"naim"} a.name,a[name]
+- chakra ui new properties: 
+radiogroup>stack>radio,
+stat>statLabel|statnumber|stathelptext>statarro
+badge
 
-Currently, two official plugins are available:
+- 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
