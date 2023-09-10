@@ -1,6 +1,7 @@
 import {
 	Badge,
 	Box,
+	Button,
 	Container,
 	HStack,
 	Image,
@@ -22,6 +23,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { server } from "../main";
 import ErrorComponent from "./ErrorComponent";
+import Chart from "./Chart";
 
 const CoinDetail = () => {
 	const { id } = useParams();
@@ -29,18 +31,27 @@ const CoinDetail = () => {
 	const [loading, setloading] = useState(true);
 	const [error, seterror] = useState(false);
 	const [currency, setcurrency] = useState("inr");
+
 	const currencySymbol =
 		currency === "inr" ? "₹" : currency === "eur" ? "€" : "$";
 
+	// coindetail related
+	const [chartArr, setchartArr] = useState([]);
+	const [days, setdays] = useState("24h");
+	const btns = ["24h", "7d", "14d", "30d", "60d", "200d", "1y", "max"];
+
 	useEffect(() => {
 		fetchCoin();
-	}, [id]);
+	}, [id, days, currency]);
 
 	const fetchCoin = async () => {
 		try {
 			const { data } = await axios.get(`${server}/coins/${id}`);
-			console.log(data);
+			const { data: chartData } = await axios.get(
+				`${server}/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`
+			);
 			setcoinArr(data);
+			setchartArr(chartData.prices);
 			setloading(false);
 		} catch (error) {
 			seterror(true);
@@ -58,10 +69,24 @@ const CoinDetail = () => {
 			) : (
 				<>
 					<Box w={"full"} borderWidth={1}>
-						asss
+						<Chart arr={chartArr} currency={currencySymbol} days={days} />
 					</Box>
 
 					{/* Button for chart */}
+					<HStack p={4} wrap={"wrap"}>
+						{btns.map((val, index) => (
+							<Button
+								isDisabled={days === val}
+								key={index}
+								onClick={() => {
+									setdays(val);
+									setloading(true);
+								}}
+							>
+								{val}
+							</Button>
+						))}
+					</HStack>
 
 					<RadioGroup onChange={setcurrency} value={currency} p={8}>
 						<Stack direction="row" spacing={6}>
