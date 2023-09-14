@@ -16,4 +16,5 @@ ChartJS.register(
 	CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend
 );
 ```
-we need three thing in this arr, currency and day we will pass in props
+
+We need three thing in this arr, currency and day we will pass in props
